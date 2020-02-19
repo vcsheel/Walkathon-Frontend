@@ -1,0 +1,192 @@
+<div class=" content">
+
+  <ng-template #content let-modal>
+    <div class="bg-dark">
+      <div class="modal-header">
+        <h4 class="modal-title text-white" id="modal-basic-title">{{ groupName }}</h4>
+        <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class=" table-responsive">
+          <table class="table tablesorter" id="">
+            <thead>
+              <tr>
+                <th style="font-size:16px">Rank</th>
+                <th style="font-size:16px">Name</th>
+                <th style="font-size:16px">Steps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor='let member of groupMembers' [ngStyle]="{'background-color': member.redzone? 'red' : 'dark'}">
+                <td style="font-size:16px"> {{ member.rank }} </td>
+                <td style="font-size:16px"> {{ member.name }} </td>
+                <td style="font-size:16px"> {{ member.steps }} </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <div class=" row">
+    <div class=" col-lg-4">
+      <div class=" card card-user">
+        <div class=" card-header">
+          <h2 class=" card-title">Group Leader</h2>
+        </div>
+        <div class=" card-body">
+          <p class=" card-text"></p>
+          <div class=" author" *ngFor='let indLead of todayGroupLeader'>
+            <div class=" block block-one"></div>
+            <div class=" block block-two"></div>
+            <div class=" block block-three"></div>
+            <div class=" block block-four"></div>
+            <a href="javascript:void(0)">
+              <img alt="..." class=" avatar" src="assets/img/group.png" />
+
+              <h3 class=" title">{{ indLead.group_name }}</h3>
+            </a>
+            <h4 class=" description"><b>{{ indLead.data_value }}</b></h4>
+            <p class=" description"> </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class=" col-lg-4">
+      <div class=" card card-user bg-info">
+        <div class=" card-body">
+          <div class="author text-center">
+            <a>
+              <img alt="..." class=" avatar" src="assets/img/HCS_Logo.png" />
+            </a>
+            <div class=" card-header">
+              <h2 class=" card-title text-center">
+                <b> HCS Walkathon 2020 </b>
+              </h2>
+            </div>
+            <h4><b>
+                17th Feb - 8th March</b>
+            </h4>
+            <div>
+
+              <div class=" btn-group btn-group-toggle float-center" data-toggle="buttons">
+                <label class=" btn btn-sm btn-danger btn-simple" [ngClass]="{'active':clicked===true}">
+                  <input checked="checked" name="options" type="radio"
+                    (click)="clicked=true;clicked1=false;clicked2=false;setActive('btn1')" />
+
+                  <span class=" d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                    Today
+                  </span>
+                  <span class=" d-block d-sm-none">
+                    <i class=" tim-icons icon-single-02"> </i>
+                  </span>
+                </label>
+                <label class=" btn btn-sm btn-danger btn-simple" [ngClass]="{'active':clicked1===true}">
+                  <input class=" d-none d-sm-none" name="options" type="radio"
+                    (click)="clicked=false;clicked1=true;clicked2=false;setActive('btn2')" />
+
+                  <span class=" d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                    All Time
+                  </span>
+                  <span class=" d-block d-sm-none">
+                    <i class=" tim-icons icon-gift-2"> </i>
+                  </span>
+                </label>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class=" col-lg-4">
+      <div class=" card card-user">
+        <div class=" card-header">
+          <h2 class=" card-title">Individual Leader</h2>
+        </div>
+        <div class=" card-body">
+          <p class=" card-text"></p>
+          <div class=" author" *ngFor='let indLead of todayIndividualLeader'>
+            <div class=" block block-one"></div>
+            <div class=" block block-two"></div>
+            <div class=" block block-three"></div>
+            <div class=" block block-four"></div>
+            <a href="javascript:void(0)">
+              <img alt="..." class=" avatar" src="assets/img/user.png" />
+
+              <h3 class=" title">{{ indLead.info.display_name }}</h3>
+            </a>
+            <h4 class="text-center">{{ indLead.data_value }}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class=" row">
+    <div class=" col-lg-6 col-md-12">
+      <div class=" card">
+        <div class=" card-header">
+          <h3 class=" card-title"><b>Group Leaderboard</b></h3>
+        </div>
+        <div class=" card-body">
+          <div class=" table-responsive">
+            <table class=" table tablesorter" id="">
+              <thead class=" text-white">
+                <tr>
+                  <th style="font-size:16px">Rank</th>
+                  <th style="font-size:16px">Name</th>
+                  <th style="font-size:16px">Size</th>
+                  <th style="font-size:16px">Total Steps</th>
+                  <th style="font-size:16px">Avg Steps</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor='let grp of groupRankList' [ngStyle]="{'background-color': grp.redzone? 'teal' : 'dark'}" (click)="open(content); sendData(grp)">
+                  <td style="font-size:16px"> {{ grp.rank }} </td>
+                  <td style="font-size:16px"> {{ grp.group_name }} </td>
+                  <td style="font-size:16px" class="text-center"> {{ grp.user_count }} </td>
+                  <td style="font-size:16px" class="text-center"> {{ grp.data_value }} </td>
+                  <td style="font-size:16px" class="text-center"> {{ grp.avg_steps }} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class=" col-lg-6 col-md-12">
+      <div class=" card">
+        <div class=" card-header">
+          <h3 class=" card-title"><b>Individual Leaderboard</b></h3>
+        </div>
+        <div class=" card-body">
+          <div class="table-full-width table-responsive">
+            <table class=" table tablesorter" id="">
+              <thead class=" text-white">
+                <tr>
+                  <th style="font-size:16px"> Rank</th>
+                  <th style="font-size:16px">Name</th>
+                  <th style="font-size:16px">Group</th>
+                  <th style="font-size:16px">Steps</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor='let ind of individualList'>
+                  <td style="font-size:16px"> {{ ind.rank }} </td>
+                  <td style="font-size:16px"> {{ ind.info.display_name }} </td>
+                  <td style="font-size:16px"> {{ ind.group_name }} </td>
+                  <td style="font-size:16px"> {{ ind.data_value }} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
