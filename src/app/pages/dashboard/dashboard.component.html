@@ -31,6 +31,31 @@
     </div>
   </ng-template>
 
+
+  <ng-template #content1 let-modal>
+    <div class="bg-dark">
+      <div class="modal-header">
+        <h4 class="modal-title text-white" id="modal-basic-title">{{graphIndividualName}}</h4>
+        <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class=" card card-chart">
+          <div class=" card-header">
+            <h3 class=" card-title">
+              <i class=" tim-icons icon-delivery-fast text-info"> </i> {{graphTotalSteps}}
+            </h3>
+          </div>
+          <div class=" card-body">
+            <div class=" chart-area"><canvas id="CountryChart"> </canvas></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+
   <div class=" row">
     <div class=" col-lg-4">
       <div class=" card card-user">
@@ -145,7 +170,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor='let grp of groupRankList' [ngStyle]="{'background-color': grp.redzone? 'teal' : 'dark'}" (click)="open(content); sendData(grp)">
+                <tr *ngFor='let grp of groupRankList' [ngStyle]="{'background-color': grp.redzone? 'red' : 'dark'}" (click)="open(content,null); sendData(grp)">
                   <td style="font-size:16px"> {{ grp.rank }} </td>
                   <td style="font-size:16px"> {{ grp.group_name }} </td>
                   <td style="font-size:16px" class="text-center"> {{ grp.user_count }} </td>
@@ -176,7 +201,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor='let ind of individualList'>
+                <tr *ngFor='let ind of individualList' (click)="showGraph? open(content1,ind) : return;">
                   <td style="font-size:16px"> {{ ind.rank }} </td>
                   <td style="font-size:16px"> {{ ind.info.display_name }} </td>
                   <td style="font-size:16px"> {{ ind.group_name }} </td>
