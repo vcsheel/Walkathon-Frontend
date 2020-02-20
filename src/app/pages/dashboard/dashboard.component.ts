@@ -67,11 +67,19 @@ export class DashboardComponent implements OnInit {
     console.log("size: "+dsize);
 
     for(let i=17;i<dsize;i++){
+      var feb = " Feb";
+      var march = " March";
       var d = i%29;
       if(d==0){
         d = 29;
       }
-      this.historyDates.push(d);
+      var month;
+      if(d<10){
+        month = march;
+      }else{
+        month = feb;
+      }
+      this.historyDates.push(d+month);
     }
 
     this.canvas = document.getElementById("CountryChart");
