@@ -42,7 +42,6 @@ export class DashboardComponent implements OnInit {
   constructor(private rest: RestApiService, private modalService: NgbModal) {}
 
   open(content,item) {
-
     if(item){
       this.modalService.open(content, {size: 'lg',ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
         //this.closeResult = `Closed with: ${result}`;
