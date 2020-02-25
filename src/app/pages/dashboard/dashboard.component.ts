@@ -25,13 +25,13 @@ export class DashboardComponent implements OnInit {
   public todayGroupLeader: any;
   public OverallIndividualLeader: any;
   public OverallGroupLeader: any;
-  public today:any = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+  public today:any;
   public groupMembersDetails:any = {};
   public groupMembers:any;
   public groupName:any;
 
-  public startDate = this.today;
-  public endDate = this.today;
+  public startDate:any;
+  public endDate:any;
   public closeResult: string;
   public historySteps:any;
   public historyDates:any = [];
@@ -42,13 +42,20 @@ export class DashboardComponent implements OnInit {
   constructor(private rest: RestApiService, private modalService: NgbModal) {}
 
   open(content,item) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      //this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+
     if(item){
+      this.modalService.open(content, {size: 'lg',ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        //this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
       this.drawBarGraph(item);
+    }else{
+      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        //this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
     }
   }
 
@@ -173,7 +180,7 @@ export class DashboardComponent implements OnInit {
 
   setActive(buttonName){
     console.log("SetActive: "+ buttonName)
-
+    this.today = formatDate(new Date(), 'yyyy-MM-dd', 'en');
     if(buttonName == 'btn1'){
       this.startDate = this.today;
       this.endDate = this.today;
@@ -343,6 +350,8 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit() {
+    this.today = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+    this.startDate = this.endDate = this.today;
     this.getIndividualScores();
     this.getGroupScores();
     var gradientChartOptionsConfigurationWithTooltipBlue: any = {
