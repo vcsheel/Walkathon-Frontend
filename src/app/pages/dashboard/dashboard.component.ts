@@ -203,6 +203,7 @@ export class DashboardComponent implements OnInit {
     this.individualList = []
     this.groupMembersDetails = {}
     this.groupMembers = []
+    this.filteredIndividualList = []
     this.getIndividualScores();
     this.getGroupScores();
   }
