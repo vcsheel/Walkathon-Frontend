@@ -15,6 +15,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { ComponentsModule } from "./components/components.module";
 import { RestApiService } from './rest/rest-api.service';
 
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,

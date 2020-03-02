@@ -55,7 +55,6 @@
     </div>
   </ng-template>
 
-
   <div class=" row">
     <div class=" col-lg-4">
       <div class=" card card-user">
@@ -151,6 +150,7 @@
       </div>
     </div>
   </div>
+
   <div class=" row">
     <div class=" col-lg-6 col-md-12">
       <div class=" card">
@@ -170,7 +170,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor='let grp of groupRankList' [ngStyle]="{'background-color': grp.redzone? 'red' : 'dark'}" (click)="open(content,null); sendData(grp)">
+                <tr *ngFor='let grp of groupRankList' [ngStyle]="{'background-color': grp.redzone? 'red' : 'dark'}"
+                  (click)="open(content,null); sendData(grp)">
                   <td style="font-size:16px"> {{ grp.rank }} </td>
                   <td style="font-size:16px"> {{ grp.group_name }} </td>
                   <td style="font-size:16px" class="text-center"> {{ grp.user_count }} </td>
@@ -187,7 +188,16 @@
     <div class=" col-lg-6 col-md-12">
       <div class=" card">
         <div class=" card-header">
-          <h3 class=" card-title"><b>Individual Leaderboard</b></h3>
+          <div class="row">
+            <div class="col">
+              <h3 class=" card-title"><b>Individual Leaderboard</b></h3>
+            </div>
+            <div class="col">
+              <div class="justify-content-end">
+                  <input name="search" type="text" class="form-control" [(ngModel)]="findIndividual" (keyup)="filterByEntry()" placeholder="Search" autocomplete="off"/>
+              </div>
+            </div>
+          </div>
         </div>
         <div class=" card-body">
           <div class="table-full-width table-responsive">
@@ -201,7 +211,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor='let ind of individualList' (click)="showGraph? open(content1,ind) : return;">
+                <tr *ngFor="let ind of filteredIndividualList" (click)="showGraph? open(content1,ind) : return;">
                   <td style="font-size:16px"> {{ ind.rank }} </td>
                   <td style="font-size:16px"> {{ ind.info.display_name }} </td>
                   <td style="font-size:16px"> {{ ind.group_name }} </td>

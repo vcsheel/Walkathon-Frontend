@@ -4,11 +4,14 @@ import { RestApiService } from 'src/app/rest/rest-api.service';
 import { HttpParams } from '@angular/common/http';
 import { formatDate, JsonPipe } from '@angular/common';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule }   from '@angular/forms';
 
 @Component({
   selector: "app-dashboard",
-  templateUrl: "dashboard.component.html"
+  templateUrl: "dashboard.component.html",
+  styles: [`.form-control { width: 200px; float: right; clear: both; }`]
 })
+
 export class DashboardComponent implements OnInit {
   public canvas : any;
   public ctx;
@@ -19,6 +22,7 @@ export class DashboardComponent implements OnInit {
   public clicked1: boolean = false;
   public clicked2: boolean = false;
   public individualList: any;
+  public filteredIndividualList : any;
   public groupList: any;
   public groupRankList: any = []
   public todayIndividualLeader: any;
@@ -29,6 +33,7 @@ export class DashboardComponent implements OnInit {
   public groupMembersDetails:any = {};
   public groupMembers:any;
   public groupName:any;
+  public findIndividual:String='';
 
   public startDate:any;
   public endDate:any;
@@ -38,6 +43,7 @@ export class DashboardComponent implements OnInit {
   public showGraph = false;
   public graphIndividualName:any;
   public graphTotalSteps:any;
+  public usermodel:any;
 
   constructor(private rest: RestApiService, private modalService: NgbModal) {}
 
@@ -212,6 +218,7 @@ export class DashboardComponent implements OnInit {
     this.rest.getIndividualSteps(params).subscribe((data: {}) => {
       //console.log('Mydata: ' + JSON.stringify(data));
       this.individualList = data['data']['rank_accounts'];
+      this.filteredIndividualList = JSON.parse(JSON.stringify(this.individualList));
       //console.log("List: " + JSON.stringify(this.individualList));
 
       this.listMemberInGroup();
@@ -343,6 +350,14 @@ export class DashboardComponent implements OnInit {
   getGroupLeader(){
     this.todayGroupLeader = this.filterByString(this.groupRankList,1)
     //console.log("Today's lead group: "+JSON.stringify(this.todayGroupLeader))
+  }
+
+
+  filterByEntry(){
+    this.filteredIndividualList = JSON.parse(JSON.stringify(this.individualList));
+
+    this.filteredIndividualList = this.filteredIndividualList.filter(item => ( item['info']['display_name'].toLowerCase().includes(this.findIndividual.toLowerCase()) || item['group_name'].toLowerCase().includes(this.findIndividual.toLowerCase())));
+
   }
 
 
