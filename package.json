@@ -65,7 +65,7 @@
     "@angular/platform-browser-dynamic": "9.0.2",
     "@angular/router": "9.0.2",
     "@ng-bootstrap/ng-bootstrap": "^4.2.1",
-    "chart.js": "2.8.0",
+    "chart.js": "2.9.4",
     "core-js": "3.1.4",
     "follow-redirects": "^1.10.0",
     "form-data": "^3.0.0",
